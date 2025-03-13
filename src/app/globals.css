@@ -1,26 +1,183 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --card: #0a0a0a;
+    --card-foreground: #ededed;
+    --popover: #0a0a0a;
+    --popover-foreground: #ededed;
+    --primary: #60A5FA;
+    --primary-foreground: #0a0a0a;
+    --secondary: #34D399;
+    --secondary-foreground: #0a0a0a;
+    --muted: #1a1a1a;
+    --muted-foreground: #a3a3a3;
+    --accent: #A78BFA;
+    --accent-foreground: #0a0a0a;
+    --destructive: #ef4444;
+    --destructive-foreground: #ededed;
+    --border: #262626;
+    --input: #262626;
+    --ring: #60A5FA;
+    --radius: 0.5rem;
+  }
+
+  .light {
+    --background: #ffffff;
+    --foreground: #171717;
+    --card: #ffffff;
+    --card-foreground: #171717;
+    --popover: #ffffff;
+    --popover-foreground: #171717;
+    --primary: #3B82F6;
+    --primary-foreground: #ffffff;
+    --secondary: #10B981;
+    --secondary-foreground: #ffffff;
+    --muted: #f5f5f5;
+    --muted-foreground: #737373;
+    --accent: #8B5CF6;
+    --accent-foreground: #ffffff;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: #e5e5e5;
+    --input: #e5e5e5;
+    --ring: #3B82F6;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Scroll Animation Classes */
+.scroll-trigger {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-trigger.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Platform-specific animations */
+.scroll-trigger[data-platform="android"] {
+  transform: translateX(-20px);
+}
+
+.scroll-trigger[data-platform="ios"] {
+  transform: translateX(20px);
+}
+
+.scroll-trigger[data-platform="web"] {
+  transform: translateY(20px);
+}
+
+.scroll-trigger.is-visible[data-platform="android"] {
+  transform: translateX(0);
+}
+
+.scroll-trigger.is-visible[data-platform="ios"] {
+  transform: translateX(0);
+}
+
+.scroll-trigger.is-visible[data-platform="web"] {
+  transform: translateY(0);
+}
+
+/* Staggered animation delays */
+.scroll-trigger:nth-child(1) { transition-delay: 0.1s; }
+.scroll-trigger:nth-child(2) { transition-delay: 0.2s; }
+.scroll-trigger:nth-child(3) { transition-delay: 0.3s; }
+.scroll-trigger:nth-child(4) { transition-delay: 0.4s; }
+.scroll-trigger:nth-child(5) { transition-delay: 0.5s; }
+.scroll-trigger:nth-child(6) { transition-delay: 0.6s; }
+
+/* Smooth scrolling for the entire page */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Animation classes */
+.animate-on-scroll {
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.animate-on-scroll.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-on-scroll.fade-right {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.animate-on-scroll.fade-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-on-scroll.fade-left {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.animate-on-scroll.fade-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Button styles */
+.btn {
+  @apply px-6 py-3 rounded-full font-medium transition-all duration-300 inline-flex items-center justify-center;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary/90;
+}
+
+.btn-secondary {
+  @apply bg-secondary text-white hover:bg-secondary/90;
+}
+
+.btn-outline {
+  @apply border-2 border-primary text-primary hover:bg-primary hover:text-white;
+}
+
+/* Container styles */
+.container-custom {
+  @apply container mx-auto px-4 sm:px-6 lg:px-8;
 }
